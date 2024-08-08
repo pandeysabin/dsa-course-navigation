@@ -63,9 +63,9 @@
 }
 
 .chapter-name.active.selected {
-  border: 6px solid #115fb3;
+  border: 1px solid #115fb3;
   background-color: #ffffff;
-  color: #000000;
+  color: #115fb3;
 }
 
 .chapter-container.active .lessons > div {
