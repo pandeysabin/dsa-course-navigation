@@ -51,11 +51,21 @@
   background-color: #ffe2fe;
   padding: 6px;
   border-radius: 4px;
+  min-width: 200px;
+  margin: 0 10px;
+  padding: 10px 20px;
+  box-sizing: border-box;
 }
 
 .chapter-name.active {
   background-color: #3172b4;
   color: #ffffff;
+}
+
+.chapter-name.active.selected {
+  border: 6px solid #115fb3;
+  background-color: #ffffff;
+  color: #000000;
 }
 
 .chapter-container.active .lessons > div {
