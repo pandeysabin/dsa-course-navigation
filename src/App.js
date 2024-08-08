@@ -191,7 +191,7 @@ const App = () => {
     const nextLesson = Math.min(currentLesson + 1, lessons.length - 1);
 
     setCurrentLesson(nextLesson);
-    updateHighlightedTraversal(nextLesson, "forward");
+    updateHighlightedTraversal(currentLesson + 1, "forward");
   };
 
   const goLeft = () => {
@@ -222,6 +222,8 @@ const App = () => {
 
   useEffect(() => {
     const handleKeyDown = (event) => {
+      event.preventDefault();
+
       switch (event.key) {
         case "ArrowRight":
           goRight();
@@ -360,7 +362,9 @@ function RenderLesson({
                       ? "highlight-forward"
                       : ""
                   }`}
-                  style={{ transform: "translateX(-12px)" }}
+                  style={{
+                    transform: "translateX(-12px)",
+                  }}
                 >
                   <svg
                     width="72"
@@ -373,6 +377,53 @@ function RenderLesson({
                       d="M71.709 6.47647L64.8015 0.358824C64.6755 0.247143 64.515 0.15684 64.3319 0.0946934C64.1488 0.032547 63.9479 0.000172518 63.7443 0L61.015 0C60.7328 0 60.5769 0.226471 60.7496 0.382353L66.8274 5.76471L54.0822 5.76471L0.336953 5.76471C0.151629 5.76471 0 5.87059 0 6L0 7.76471C0 7.89412 0.151629 8 0.336953 8L70.6476 8C71.7764 8 72.404 7.09412 71.709 6.47647Z"
                       fill="black"
                     />
+                  </svg>
+                </div>
+              )}
+
+            {lessonIndex === chapter.lessons.length - 1 &&
+              chapterIndex === currentChapter && (
+                <div
+                  className={`traversal-icon ${
+                    highlightedTraversal === lessonIndex + 1 &&
+                    traversalDirection === "forward" &&
+                    chapterIndex === currentChapter
+                      ? "highlight-forward"
+                      : ""
+                  }`}
+                  style={{
+                    transform: "translateX(-12px)",
+                    display: "flex",
+                    flexDirection: "column",
+                    height: "20px",
+                  }}
+                >
+                  <svg
+                    width="63"
+                    height="18"
+                    viewBox="0 0 63 18"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <g clip-path="url(#clip0_15_4)">
+                      <path
+                        d="M47.9649 8.52632L-2.89875e-07 8.52632M47.9649 15.1579L47.9649 1.89474M52.7141 12.6711L52.7141 4.38158M57.4634 10.1842L57.4634 6.86842"
+                        stroke="black"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </g>
+                    <defs>
+                      <clipPath id="clip0_15_4">
+                        <rect
+                          width="18"
+                          height="63"
+                          fill="white"
+                          transform="translate(0 18) rotate(-90)"
+                        />
+                      </clipPath>
+                    </defs>
                   </svg>
                 </div>
               )}
