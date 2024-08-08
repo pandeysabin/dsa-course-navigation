@@ -208,7 +208,6 @@ const App = () => {
 
     if (currentChapter < chapters.length - 1) {
       setCurrentChapter(currentChapter + 1);
-      // setCurrentLesson(0);
       setHighlightedTraversal(null); // Clear highlighted traversal when changing chapters
     }
   };
@@ -216,7 +215,7 @@ const App = () => {
   const goUp = () => {
     if (currentChapter > 0) {
       setCurrentChapter(currentChapter - 1);
-      setCurrentLesson(0);
+      // setCurrentLesson(0);
       setHighlightedTraversal(null); // Clear highlighted traversal when changing chapters
     }
   };
@@ -269,14 +268,21 @@ const App = () => {
           const currentChapterClassName =
             chapterIndex === currentChapter ? "active" : "";
 
+          const classSelectedName =
+            chapterIndex === currentChapter && currentLesson === -1
+              ? "selected"
+              : "";
+
           return (
             <div
               key={chapter.id}
               className={`chapter-container ${currentChapterClassName}`}
             >
-              <div className={`chapter-name ${currentChapterClassName}`}>
+              <h4
+                className={`chapter-name ${currentChapterClassName} ${classSelectedName}`}
+              >
                 {chapter.id}
-              </div>
+              </h4>
 
               <div className="lessons">
                 <RenderLesson
