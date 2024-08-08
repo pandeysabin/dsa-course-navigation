@@ -213,6 +213,10 @@ const App = () => {
   };
 
   const goUp = () => {
+    if (currentLesson >= 0) {
+      return;
+    }
+
     if (currentChapter > 0) {
       setCurrentChapter(currentChapter - 1);
       // setCurrentLesson(0);
@@ -276,10 +280,7 @@ const App = () => {
               : "";
 
           return (
-            <div
-              key={chapter.id}
-              className={`chapter-container ${currentChapterClassName}`}
-            >
+            <div key={chapter.id} className={`chapter-container active`}>
               <h4
                 className={`chapter-name ${currentChapterClassName} ${classSelectedName}`}
               >
@@ -326,14 +327,11 @@ function RenderLesson({
     });
   }, [currentLesson]);
 
-  if (chapterIndex !== currentChapter) return null;
-
   return (
     <>
       {chapter.lessons.map((lesson, lessonIndex) => (
         <React.Fragment key={lessonIndex}>
           <div
-            style={{ animationDelay: `${lessonIndex}s`, visibility: "hidden" }}
             className="lesson"
             id={
               lessonIndex === currentLesson && chapterIndex === currentChapter
@@ -345,115 +343,108 @@ function RenderLesson({
           </div>
           <div
             style={{
-              animationDelay: `${lessonIndex + 0.66}s`,
-              visibility: "hidden",
-              transform: "translateX(-200px)",
               display: "flex",
               flexDirection: "column",
             }}
           >
-            {lessonIndex < chapter.lessons.length - 1 &&
-              chapterIndex === currentChapter && (
-                <div
-                  className={`traversal-icon ${
-                    highlightedTraversal === lessonIndex + 1 &&
-                    traversalDirection === "forward" &&
-                    chapterIndex === currentChapter
-                      ? "highlight-forward"
-                      : ""
-                  }`}
-                  style={{
-                    transform: "translateX(-12px)",
-                  }}
+            {lessonIndex < chapter.lessons.length - 1 && (
+              <div
+                className={`traversal-icon ${
+                  highlightedTraversal === lessonIndex + 1 &&
+                  traversalDirection === "forward" &&
+                  chapterIndex === currentChapter
+                    ? "highlight-forward"
+                    : ""
+                }`}
+                style={{
+                  transform: "translateX(-12px)",
+                }}
+              >
+                <svg
+                  width="72"
+                  height="8"
+                  viewBox="0 0 72 8"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
                 >
-                  <svg
-                    width="72"
-                    height="8"
-                    viewBox="0 0 72 8"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M71.709 6.47647L64.8015 0.358824C64.6755 0.247143 64.515 0.15684 64.3319 0.0946934C64.1488 0.032547 63.9479 0.000172518 63.7443 0L61.015 0C60.7328 0 60.5769 0.226471 60.7496 0.382353L66.8274 5.76471L54.0822 5.76471L0.336953 5.76471C0.151629 5.76471 0 5.87059 0 6L0 7.76471C0 7.89412 0.151629 8 0.336953 8L70.6476 8C71.7764 8 72.404 7.09412 71.709 6.47647Z"
-                      fill="black"
-                    />
-                  </svg>
-                </div>
-              )}
+                  <path
+                    d="M71.709 6.47647L64.8015 0.358824C64.6755 0.247143 64.515 0.15684 64.3319 0.0946934C64.1488 0.032547 63.9479 0.000172518 63.7443 0L61.015 0C60.7328 0 60.5769 0.226471 60.7496 0.382353L66.8274 5.76471L54.0822 5.76471L0.336953 5.76471C0.151629 5.76471 0 5.87059 0 6L0 7.76471C0 7.89412 0.151629 8 0.336953 8L70.6476 8C71.7764 8 72.404 7.09412 71.709 6.47647Z"
+                    fill="black"
+                  />
+                </svg>
+              </div>
+            )}
 
-            {lessonIndex === chapter.lessons.length - 1 &&
-              chapterIndex === currentChapter && (
-                <div
-                  className={`traversal-icon ${
-                    highlightedTraversal === lessonIndex + 1 &&
-                    traversalDirection === "forward" &&
-                    chapterIndex === currentChapter
-                      ? "highlight-forward"
-                      : ""
-                  }`}
-                  style={{
-                    transform: "translateX(-12px)",
-                    display: "flex",
-                    flexDirection: "column",
-                    height: "20px",
-                  }}
+            {lessonIndex === chapter.lessons.length - 1 && (
+              <div
+                className={`traversal-icon ${
+                  highlightedTraversal === lessonIndex + 1 &&
+                  traversalDirection === "forward" &&
+                  chapterIndex === currentChapter
+                    ? "highlight-forward"
+                    : ""
+                }`}
+                style={{
+                  transform: "translateX(-12px)",
+                  display: "flex",
+                  flexDirection: "column",
+                  height: "20px",
+                }}
+              >
+                <svg
+                  width="63"
+                  height="18"
+                  viewBox="0 0 63 18"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
                 >
-                  <svg
-                    width="63"
-                    height="18"
-                    viewBox="0 0 63 18"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <g clip-path="url(#clip0_15_4)">
-                      <path
-                        d="M47.9649 8.52632L-2.89875e-07 8.52632M47.9649 15.1579L47.9649 1.89474M52.7141 12.6711L52.7141 4.38158M57.4634 10.1842L57.4634 6.86842"
-                        stroke="black"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      />
-                    </g>
-                    <defs>
-                      <clipPath id="clip0_15_4">
-                        <rect
-                          width="18"
-                          height="63"
-                          fill="white"
-                          transform="translate(0 18) rotate(-90)"
-                        />
-                      </clipPath>
-                    </defs>
-                  </svg>
-                </div>
-              )}
-            {lessonIndex < chapter.lessons.length - 1 &&
-              lessonIndex >= 0 &&
-              chapterIndex === currentChapter && (
-                <div
-                  className={`traversal-icon ${
-                    highlightedTraversal === lessonIndex &&
-                    traversalDirection === "backward" &&
-                    chapterIndex === currentChapter
-                      ? "highlight-backward"
-                      : ""
-                  }`}
-                  style={{ transform: "translateX(-1px)" }}
-                >
-                  <svg
-                    width="72"
-                    height="8"
-                    viewBox="0 0 72 8"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
+                  <g clip-path="url(#clip0_15_4)">
                     <path
-                      d="M0.290986 1.52352L7.19851 7.64117C7.32448 7.75285 7.48504 7.84315 7.66814 7.9053C7.85124 7.96745 8.05212 7.99982 8.2557 7.99999L10.985 7.99999C11.2672 7.99999 11.4231 7.77352 11.2504 7.61764L5.17258 2.23529L17.9178 2.23529L71.663 2.23529C71.8484 2.23529 72 2.12941 72 2L72 0.235294C72 0.105882 71.8484 -1.32558e-08 71.663 -2.94573e-08L1.35238 -6.17621e-06C0.223588 -6.27489e-06 -0.403979 0.905876 0.290986 1.52352Z"
-                      fill="black"
+                      d="M47.9649 8.52632L-2.89875e-07 8.52632M47.9649 15.1579L47.9649 1.89474M52.7141 12.6711L52.7141 4.38158M57.4634 10.1842L57.4634 6.86842"
+                      stroke="black"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
                     />
-                  </svg>
-                </div>
-              )}
+                  </g>
+                  <defs>
+                    <clipPath id="clip0_15_4">
+                      <rect
+                        width="18"
+                        height="63"
+                        fill="white"
+                        transform="translate(0 18) rotate(-90)"
+                      />
+                    </clipPath>
+                  </defs>
+                </svg>
+              </div>
+            )}
+            {lessonIndex < chapter.lessons.length - 1 && lessonIndex >= 0 && (
+              <div
+                className={`traversal-icon ${
+                  highlightedTraversal === lessonIndex &&
+                  traversalDirection === "backward" &&
+                  chapterIndex === currentChapter
+                    ? "highlight-backward"
+                    : ""
+                }`}
+                style={{ transform: "translateX(-1px)" }}
+              >
+                <svg
+                  width="72"
+                  height="8"
+                  viewBox="0 0 72 8"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M0.290986 1.52352L7.19851 7.64117C7.32448 7.75285 7.48504 7.84315 7.66814 7.9053C7.85124 7.96745 8.05212 7.99982 8.2557 7.99999L10.985 7.99999C11.2672 7.99999 11.4231 7.77352 11.2504 7.61764L5.17258 2.23529L17.9178 2.23529L71.663 2.23529C71.8484 2.23529 72 2.12941 72 2L72 0.235294C72 0.105882 71.8484 -1.32558e-08 71.663 -2.94573e-08L1.35238 -6.17621e-06C0.223588 -6.27489e-06 -0.403979 0.905876 0.290986 1.52352Z"
+                    fill="black"
+                  />
+                </svg>
+              </div>
+            )}
           </div>
         </React.Fragment>
       ))}
