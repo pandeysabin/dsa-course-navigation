@@ -222,6 +222,8 @@ const App = () => {
 
   useEffect(() => {
     const handleKeyDown = (event) => {
+      event.preventDefault();
+      
       switch (event.key) {
         case "ArrowRight":
           goRight();
