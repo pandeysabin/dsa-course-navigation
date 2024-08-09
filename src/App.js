@@ -198,6 +198,8 @@ const App = () => {
   const courseContentRef = useRef(null);
   const selectedChapterRef = useRef(null);
 
+  const [isComingFromChapter, setIsComingFromChapter] = useState(false);
+
   const updateHighlightedTraversal = (targetLessonIndex, direction) => {
     setHighlightedTraversal(targetLessonIndex);
     setTraversalDirection(direction);
@@ -218,6 +220,10 @@ const App = () => {
   const goLeft = () => {
     const previousLesson = Math.max(currentLesson - 1, -1);
 
+    if (previousLesson === -1) {
+      setIsComingFromChapter(false);
+    }
+
     updateHighlightedTraversal(previousLesson, "backward");
     setCurrentLesson(previousLesson);
   };
@@ -229,6 +235,7 @@ const App = () => {
 
     if (currentChapter < chapters.length - 1) {
       setCurrentChapter(currentChapter + 1);
+      setIsComingFromChapter(true);
       setHighlightedTraversal(null); // Clear highlighted traversal when changing chapters
     }
   };
@@ -240,30 +247,35 @@ const App = () => {
 
     if (currentChapter > 0) {
       setCurrentChapter(currentChapter - 1);
+      setIsComingFromChapter(true);
       // setCurrentLesson(0);
       setHighlightedTraversal(null); // Clear highlighted traversal when changing chapters
     }
   };
 
   useEffect(() => {
-    const handleKeyDown = (event) => {
-      event.preventDefault();
+    const ARROW_KEYS = ["ArrowRight", "ArrowLeft", "ArrowDown", "ArrowUp"];
 
-      switch (event.key) {
-        case "ArrowRight":
-          goRight();
-          break;
-        case "ArrowLeft":
-          goLeft();
-          break;
-        case "ArrowDown":
-          goDown();
-          break;
-        case "ArrowUp":
-          goUp();
-          break;
-        default:
-          break;
+    const handleKeyDown = (event) => {
+      if (ARROW_KEYS.includes(event.key)) {
+        event.preventDefault();
+
+        switch (event.key) {
+          case "ArrowRight":
+            goRight();
+            break;
+          case "ArrowLeft":
+            goLeft();
+            break;
+          case "ArrowDown":
+            goDown();
+            break;
+          case "ArrowUp":
+            goUp();
+            break;
+          default:
+            break;
+        }
       }
     };
 
@@ -300,71 +312,99 @@ const App = () => {
         </button>
       </div>
       <div className="course-content" ref={courseContentRef}>
-        {chapters.map((chapter, chapterIndex) => {
-          const isThisTheCurrentChapter = chapterIndex === currentChapter;
-
-          const currentChapterClassName = isThisTheCurrentChapter
-            ? "active"
-            : "";
-
-          const isTheChapterSelected =
-            isThisTheCurrentChapter && currentLesson === -1;
-
-          const classSelectedName = isTheChapterSelected ? "selected" : "";
-
-          return (
-            <>
-              <div key={chapter.id} className={`chapter-container active`}>
-                <h4
-                  className={`chapter-name ${currentChapterClassName} ${classSelectedName}`}
-                  ref={isTheChapterSelected ? selectedChapterRef : null}
-                >
-                  {chapter.name}
-                </h4>
-
-                <div style={{ display: "flex", flexDirection: "column" }}>
-                  <RightArrow />
-
-                  <LeftArrow />
-                </div>
-
-                <div className="lessons">
-                  <RenderLesson
-                    chapter={chapter}
-                    chapterIndex={chapterIndex}
-                    currentLesson={currentLesson}
-                    currentChapter={currentChapter}
-                    highlightedTraversal={highlightedTraversal}
-                    traversalDirection={traversalDirection}
-                  />
-                </div>
-              </div>
-
-              {chapterIndex !== chapters.length - 1 && (
-                <div style={{ display: "flex" }}>
-                  <div
-                    style={{
-                      margin: "0 10px",
-                      flexBasis: 200,
-                      display: "flex",
-                      justifyContent: "center",
-                    }}
-                  >
-                    <div>
-                      <DownArrow />
-
-                      <UpArrow />
-                    </div>
-                  </div>
-                </div>
-              )}
-            </>
-          );
-        })}
+        {chapters.map((chapter, chapterIndex) => (
+          <Chapter
+            chapter={chapter}
+            chapterIndex={chapterIndex}
+            currentChapter={currentChapter}
+            currentLesson={currentLesson}
+            highlightedTraversal={highlightedTraversal}
+            traversalDirection={traversalDirection}
+            chapters={chapters}
+            selectedChapterRef={selectedChapterRef}
+            key={chapter.id}
+            isComingFromChapter={isComingFromChapter}
+          />
+        ))}
       </div>
     </div>
   );
 };
+
+function Chapter({
+  chapter,
+  currentLesson,
+  chapterIndex,
+  currentChapter,
+  highlightedTraversal,
+  traversalDirection,
+  chapters,
+  selectedChapterRef,
+  isComingFromChapter,
+}) {
+  const isThisTheCurrentChapter = chapterIndex === currentChapter;
+
+  const currentChapterClassName = isThisTheCurrentChapter ? "active" : "";
+
+  const isTheChapterSelected = isThisTheCurrentChapter && currentLesson === -1;
+
+  const classSelectedName = isTheChapterSelected ? "selected" : "";
+
+  return (
+    <>
+      <div key={chapter.id} className={`chapter-container active`}>
+        <h4
+          className={`chapter-name ${currentChapterClassName} ${classSelectedName}`}
+          ref={isTheChapterSelected ? selectedChapterRef : null}
+        >
+          {chapter.name}
+        </h4>
+
+        <div style={{ display: "flex", flexDirection: "column" }}>
+          <RightArrow
+            isNavigating={
+              currentChapter === chapterIndex && currentLesson === 0
+            }
+          />
+
+          <LeftArrow
+            isNavigating={isTheChapterSelected && !isComingFromChapter}
+          />
+        </div>
+
+        <div className="lessons">
+          <RenderLesson
+            chapter={chapter}
+            chapterIndex={chapterIndex}
+            currentLesson={currentLesson}
+            currentChapter={currentChapter}
+            highlightedTraversal={highlightedTraversal}
+            traversalDirection={traversalDirection}
+          />
+        </div>
+      </div>
+
+      {chapterIndex !== chapters.length - 1 && (
+        <div style={{ display: "flex" }}>
+          <div
+            style={{
+              margin: "0 10px",
+              flexBasis: 200,
+              display: "flex",
+              justifyContent: "center",
+            }}
+          >
+            <div>
+              <DownArrow />
+
+              <UpArrow />
+            </div>
+          </div>
+        </div>
+      )}
+    </>
+  );
+}
 
 function RenderLesson({
   chapter,

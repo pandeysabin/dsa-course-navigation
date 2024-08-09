@@ -27,10 +27,10 @@ export function UpArrow() {
   );
 }
 
-export function LeftArrow() {
+export function LeftArrow({ isNavigating }) {
   return (
     <svg
-      className="arrow-backward"
+      className={`arrow-backward ${isNavigating ? "highlight-backward" : ""}`}
       width="25"
       height="25"
       viewBox="0 0 25 25"
@@ -55,10 +55,10 @@ export function LeftArrow() {
   );
 }
 
-export function RightArrow() {
+export function RightArrow({ isNavigating }) {
   return (
     <svg
-      className="arrow-forward"
+      className={`arrow-forward ${isNavigating ? "highlight-forward" : ""}`}
       width="24"
       height="24"
       viewBox="0 0 24 24"
