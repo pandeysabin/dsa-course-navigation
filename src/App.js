@@ -340,22 +340,24 @@ const App = () => {
                 </div>
               </div>
 
-              <div style={{ display: "flex" }}>
-                <div
-                  style={{
-                    margin: "0 10px",
-                    flexBasis: 200,
-                    display: "flex",
-                    justifyContent: "center",
-                  }}
-                >
-                  <div>
-                    <DownArrow />
+              {chapterIndex !== chapters.length - 1 && (
+                <div style={{ display: "flex" }}>
+                  <div
+                    style={{
+                      margin: "0 10px",
+                      flexBasis: 200,
+                      display: "flex",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <div>
+                      <DownArrow />
 
-                    <UpArrow />
+                      <UpArrow />
+                    </div>
                   </div>
                 </div>
-              </div>
+              )}
             </>
           );
         })}
