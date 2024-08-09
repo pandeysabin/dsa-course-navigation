@@ -5,6 +5,7 @@ const App = () => {
   const chapters = [
     {
       id: "chapter-1",
+      name: "Introduction",
       lessons: [
         "Introduction to DSA",
         "Why Learn DSA?",
@@ -14,6 +15,7 @@ const App = () => {
     },
     {
       id: "chapter-2",
+      name: "Sorting Algorithms",
       lessons: [
         "Bubble Sort",
         "Selection Sort",
@@ -25,10 +27,12 @@ const App = () => {
     },
     {
       id: "chapter-3",
+      name: "Search Algorithms",
       lessons: ["Linear Search", "Binary Search"],
     },
     {
       id: "chapter-4",
+      name: "Linked List",
       lessons: [
         "Linked List",
         "Linked List Operations",
@@ -37,6 +41,7 @@ const App = () => {
     },
     {
       id: "chapter-5",
+      name: "Circular Linked List",
       lessons: [
         "Introduction to Circular Linked List",
         "Circular Linked List Operations",
@@ -45,6 +50,7 @@ const App = () => {
     },
     {
       id: "chapter-6",
+      name: "Doubly Linked List",
       lessons: [
         "Introduction to Doubly Linked List",
         "Doubly Linked List Operations",
@@ -53,10 +59,12 @@ const App = () => {
     },
     {
       id: "chapter-7",
+      name: "Stacks and Queue",
       lessons: ["Stack", "Queue", "Double Ended Queue (Deque)"],
     },
     {
       id: "chapter-8",
+      name: "Hashing",
       lessons: [
         "Introduction to Hashing",
         "Hashing Techniques",
@@ -68,6 +76,7 @@ const App = () => {
     },
     {
       id: "chapter-9",
+      name: "String Matching Algorithms",
       lessons: [
         "Introduction",
         "Brute Force Method",
@@ -77,6 +86,7 @@ const App = () => {
     },
     {
       id: "chapter-10",
+      name: "Tree Data Structure",
       lessons: [
         "Nonlinear Data Structure",
         "Tree Data Structure",
@@ -86,6 +96,7 @@ const App = () => {
     },
     {
       id: "chapter-11",
+      name: "Binary Tree",
       lessons: [
         "Introduction to Binary Trees",
         "Properties of Binary Trees",
@@ -98,6 +109,7 @@ const App = () => {
     },
     {
       id: "chapter-12",
+      name: "Heaps",
       lessons: [
         "Array Representation of Binary Tree",
         "Introduction to Heaps",
@@ -108,6 +120,7 @@ const App = () => {
     },
     {
       id: "chapter-13",
+      name: "Greedy Algorithms",
       lessons: [
         "Introduction to Greedy Algorithms",
         "Classroom Scheduling Problem",
@@ -118,6 +131,7 @@ const App = () => {
     },
     {
       id: "chapter-14",
+      name: "Graph Data Structure",
       lessons: [
         "Graph Data Structure",
         "Graph Terminologies",
@@ -129,6 +143,7 @@ const App = () => {
     },
     {
       id: "chapter-15",
+      name: "Relationships in a Graph",
       lessons: [
         "Graph Connectivity",
         "Touring a Graph",
@@ -138,6 +153,7 @@ const App = () => {
     },
     {
       id: "chapter-16",
+      name: "Graph Based Algorithms",
       lessons: [
         "Graph Based Algorithms",
         "Topological Sorting",
@@ -150,6 +166,7 @@ const App = () => {
     },
     {
       id: "chapter-17",
+      name: "Sorting (II)",
       lessons: [
         "Additional Sorting Techniques",
         "Bucket Sort",
@@ -159,6 +176,7 @@ const App = () => {
     },
     {
       id: "chapter-18",
+      name: "Balanced Trees",
       lessons: [
         "Introduction to Balanced Trees",
         "AVL Trees",
@@ -167,6 +185,7 @@ const App = () => {
     },
     {
       id: "chapter-19",
+      name: "What's Next?",
       lessons: ["What's Next?"],
     },
   ];
@@ -298,7 +317,7 @@ const App = () => {
                 className={`chapter-name ${currentChapterClassName} ${classSelectedName}`}
                 ref={isTheChapterSelected ? selectedChapterRef : null}
               >
-                {chapter.id}
+                {chapter.name}
               </h4>
 
               <div className="lessons">
