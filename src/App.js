@@ -312,25 +312,136 @@ const App = () => {
           const classSelectedName = isTheChapterSelected ? "selected" : "";
 
           return (
-            <div key={chapter.id} className={`chapter-container active`}>
-              <h4
-                className={`chapter-name ${currentChapterClassName} ${classSelectedName}`}
-                ref={isTheChapterSelected ? selectedChapterRef : null}
-              >
-                {chapter.name}
-              </h4>
+            <>
+              <div key={chapter.id} className={`chapter-container active`}>
+                <h4
+                  className={`chapter-name ${currentChapterClassName} ${classSelectedName}`}
+                  ref={isTheChapterSelected ? selectedChapterRef : null}
+                >
+                  {chapter.name}
+                </h4>
 
-              <div className="lessons">
-                <RenderLesson
-                  chapter={chapter}
-                  chapterIndex={chapterIndex}
-                  currentLesson={currentLesson}
-                  currentChapter={currentChapter}
-                  highlightedTraversal={highlightedTraversal}
-                  traversalDirection={traversalDirection}
-                />
+                <div style={{ display: "flex", flexDirection: "column" }}>
+                  <svg
+                    className="arrow-forward"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M5 12H19"
+                      stroke="#0556f3"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                    <path
+                      d="M12 5L19 12L12 19"
+                      stroke="#0556f3"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+
+                  <svg
+                    className="arrow-backward"
+                    width="25"
+                    height="25"
+                    viewBox="0 0 25 25"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M19.1062 12.0441L5.10679 12.1689"
+                      stroke="#0556f3"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                    <path
+                      d="M12.1689 19.1062L5.10679 12.1689L12.0441 5.10679"
+                      stroke="#0556f3"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                </div>
+
+                <div className="lessons">
+                  <RenderLesson
+                    chapter={chapter}
+                    chapterIndex={chapterIndex}
+                    currentLesson={currentLesson}
+                    currentChapter={currentChapter}
+                    highlightedTraversal={highlightedTraversal}
+                    traversalDirection={traversalDirection}
+                  />
+                </div>
               </div>
-            </div>
+
+              <div style={{ display: "flex" }}>
+                <div
+                  style={{
+                    margin: "0 10px",
+                    flexBasis: 200,
+                    display: "flex",
+                    justifyContent: "center",
+                  }}
+                >
+                  <div>
+                    <svg
+                      width="26"
+                      height="26"
+                      viewBox="0 0 26 26"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M13.1896 6.107L13.0234 20.106"
+                        stroke="#0556f3"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                      <path
+                        d="M20.106 13.1896L13.0234 20.106L6.107 13.0234"
+                        stroke="#0556f3"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+
+                    <svg
+                      width="26"
+                      height="26"
+                      viewBox="0 0 26 26"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M13.2252 20.1055L12.9878 6.10751"
+                        stroke="#0556f3"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                      <path
+                        d="M6.10752 13.2252L12.9878 6.10751L20.1055 12.9878"
+                        stroke="#0556f3"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </>
           );
         })}
       </div>
