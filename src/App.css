@@ -16,13 +16,24 @@
   margin-bottom: 20px;
   display: flex;
   justify-content: center;
+  gap: 4px;
 }
 
 .nav-button {
   font-size: 24px;
-  margin: 5px;
   padding: 10px;
   cursor: pointer;
+  background-color: transparent;
+  border: 1px solid #0556f3;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+}
+
+.nav-button:hover {
+  background-color: #f5f1f1;
+  transition: background-color 0.3s;
+  border-color: #033ba8;
 }
 
 /* Container for course content */
