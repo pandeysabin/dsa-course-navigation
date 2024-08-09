@@ -176,6 +176,7 @@ const App = () => {
   const [highlightedTraversal, setHighlightedTraversal] = useState(null); // Track highlighted traversal
   const [traversalDirection, setTraversalDirection] = useState(null); // Track traversal direction
   const courseContentRef = useRef(null);
+  const selectedChapterRef = useRef(null);
 
   const updateHighlightedTraversal = (targetLessonIndex, direction) => {
     setHighlightedTraversal(targetLessonIndex);
@@ -253,6 +254,15 @@ const App = () => {
     };
   }, [currentChapter, currentLesson]);
 
+  useEffect(() => {
+    if (currentLesson === -1 && selectedChapterRef.current !== null) {
+      selectedChapterRef.current.scrollIntoView({
+        block: "end",
+        behavior: "smooth",
+      });
+    }
+  }, [currentLesson, currentChapter]);
+
   return (
     <div className="course-container">
       <div className="navigation-buttons">
@@ -271,18 +281,22 @@ const App = () => {
       </div>
       <div className="course-content" ref={courseContentRef}>
         {chapters.map((chapter, chapterIndex) => {
-          const currentChapterClassName =
-            chapterIndex === currentChapter ? "active" : "";
+          const isThisTheCurrentChapter = chapterIndex === currentChapter;
 
-          const classSelectedName =
-            chapterIndex === currentChapter && currentLesson === -1
-              ? "selected"
-              : "";
+          const currentChapterClassName = isThisTheCurrentChapter
+            ? "active"
+            : "";
+
+          const isTheChapterSelected =
+            isThisTheCurrentChapter && currentLesson === -1;
+
+          const classSelectedName = isTheChapterSelected ? "selected" : "";
 
           return (
             <div key={chapter.id} className={`chapter-container active`}>
               <h4
                 className={`chapter-name ${currentChapterClassName} ${classSelectedName}`}
+                ref={isTheChapterSelected ? selectedChapterRef : null}
               >
                 {chapter.id}
               </h4>
