@@ -198,7 +198,7 @@ const App = () => {
   const courseContentRef = useRef(null);
   const selectedChapterRef = useRef(null);
 
-  const [isComingFromChapter, setIsComingFromChapter] = useState(false);
+  const [chapterTraversalDir, setChapterTraversalDir] = useState(null);
 
   const updateHighlightedTraversal = (targetLessonIndex, direction) => {
     setHighlightedTraversal(targetLessonIndex);
@@ -221,7 +221,7 @@ const App = () => {
     const previousLesson = Math.max(currentLesson - 1, -1);
 
     if (previousLesson === -1) {
-      setIsComingFromChapter(false);
+      setChapterTraversalDir(null);
     }
 
     updateHighlightedTraversal(previousLesson, "backward");
@@ -235,7 +235,7 @@ const App = () => {
 
     if (currentChapter < chapters.length - 1) {
       setCurrentChapter(currentChapter + 1);
-      setIsComingFromChapter(true);
+      setChapterTraversalDir("down");
       setHighlightedTraversal(null); // Clear highlighted traversal when changing chapters
     }
   };
@@ -247,7 +247,7 @@ const App = () => {
 
     if (currentChapter > 0) {
       setCurrentChapter(currentChapter - 1);
-      setIsComingFromChapter(true);
+      setChapterTraversalDir("up");
       // setCurrentLesson(0);
       setHighlightedTraversal(null); // Clear highlighted traversal when changing chapters
     }
@@ -313,18 +313,48 @@ const App = () => {
       </div>
       <div className="course-content" ref={courseContentRef}>
         {chapters.map((chapter, chapterIndex) => (
-          <Chapter
-            chapter={chapter}
-            chapterIndex={chapterIndex}
-            currentChapter={currentChapter}
-            currentLesson={currentLesson}
-            highlightedTraversal={highlightedTraversal}
-            traversalDirection={traversalDirection}
-            chapters={chapters}
-            selectedChapterRef={selectedChapterRef}
-            key={chapter.id}
-            isComingFromChapter={isComingFromChapter}
-          />
+          <>
+            <Chapter
+              chapter={chapter}
+              chapterIndex={chapterIndex}
+              currentChapter={currentChapter}
+              currentLesson={currentLesson}
+              highlightedTraversal={highlightedTraversal}
+              traversalDirection={traversalDirection}
+              selectedChapterRef={selectedChapterRef}
+              key={chapter.id}
+              isComingFromChapter={chapterTraversalDir}
+            />
+
+            {chapterIndex !== chapters.length - 1 && (
+              <div style={{ display: "flex" }}>
+                <div
+                  style={{
+                    margin: "0 10px",
+                    flexBasis: 200,
+                    display: "flex",
+                    justifyContent: "center",
+                  }}
+                >
+                  <div>
+                    <DownArrow
+                      isNavigating={
+                        chapterTraversalDir === "down" &&
+                        currentChapter === chapterIndex + 1
+                      }
+                    />
+
+                    <UpArrow
+                      isNavigating={
+                        chapterTraversalDir === "up" &&
+                        currentChapter === chapterIndex
+                      }
+                    />
+                  </div>
+                </div>
+              </div>
+            )}
+          </>
         ))}
       </div>
     </div>
@@ -338,7 +368,6 @@ function Chapter({
   currentChapter,
   highlightedTraversal,
   traversalDirection,
-  chapters,
   selectedChapterRef,
   isComingFromChapter,
 }) {
@@ -383,25 +412,6 @@ function Chapter({
           />
         </div>
       </div>
-
-      {chapterIndex !== chapters.length - 1 && (
-        <div style={{ display: "flex" }}>
-          <div
-            style={{
-              margin: "0 10px",
-              flexBasis: 200,
-              display: "flex",
-              justifyContent: "center",
-            }}
-          >
-            <div>
-              <DownArrow />
-
-              <UpArrow />
-            </div>
-          </div>
-        </div>
-      )}
     </>
   );
 }

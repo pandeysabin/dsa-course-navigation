@@ -1,8 +1,9 @@
 import * as React from "react-dom";
 
-export function UpArrow() {
+export function UpArrow({ isNavigating }) {
   return (
     <svg
+      className={`arrow-up ${isNavigating ? "highlight-forward" : ""}`}
       width="26"
       height="26"
       viewBox="0 0 26 26"
@@ -83,9 +84,10 @@ export function RightArrow({ isNavigating }) {
   );
 }
 
-export function DownArrow() {
+export function DownArrow({ isNavigating }) {
   return (
     <svg
+      className={`arrow-down ${isNavigating ? "highlight-forward" : ""}`}
       width="26"
       height="26"
       viewBox="0 0 26 26"
