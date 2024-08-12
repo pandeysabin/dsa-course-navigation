@@ -1,3 +1,18 @@
+@font-face {
+  font-family: "EuclidCircularA-Medium";
+  src: local("EuclidCircularA-Medium"),
+    url("./fonts/EuclidCircularA-Medium.otf") format("opentype");
+  font-weight: normal;
+}
+
+* {
+  font-family: "EuclidCircularA-Medium";
+}
+
+:root {
+  --primary-color: #0556f3;
+}
+
 /* Container for the whole course layout */
 .course-container {
   display: flex;
@@ -24,7 +39,7 @@
   padding: 10px;
   cursor: pointer;
   background-color: transparent;
-  border: 1px solid #0556f3;
+  border: 1px solid var(--primary-color);
   border-radius: 4px;
   display: flex;
   align-items: center;
@@ -101,7 +116,7 @@
 .lesson {
   padding: 10px 30px;
   margin: 0px;
-  border: 1px solid #0556f3;
+  border: 1px solid var(--primary-color);
   border-radius: 4px;
   background-color: #ffffff;
   transition: background-color 0.3s, transform 0.3s;
@@ -118,7 +133,7 @@
   height: 100%;
   top: 0;
   left: 0;
-  border-right: 1px solid #0556f3;
+  border-right: 1px solid var(--primary-color);
 }
 
 .lesson::after {
@@ -126,13 +141,13 @@
   position: absolute;
   width: 20px;
   height: 100%;
-  border-left: 1px solid #0556f3;
+  border-left: 1px solid var(--primary-color);
   top: 0;
   right: 0;
 }
 
 .lesson#active {
-  background-color: #007bff;
+  background-color: var(--primary-color);
   color: white;
 }
 
