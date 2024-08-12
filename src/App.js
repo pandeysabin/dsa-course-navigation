@@ -1,6 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./App.css"; // Ensure this file is updated
-import { DownArrow, LeftArrow, RightArrow, UpArrow } from "./Arrows";
+import {
+  DownArrow,
+  InterChapterBottomArrow,
+  InterChapterTopArrow,
+  LeftArrow,
+  RightArrow,
+  UpArrow,
+} from "./Arrows";
 
 const App = () => {
   const chapters = [
@@ -213,6 +220,9 @@ const App = () => {
     const lessons = chapters[currentChapter].lessons;
     const nextLesson = Math.min(currentLesson + 1, lessons.length - 1);
 
+    if (nextLesson === 0) {
+    }
+
     setCurrentLesson(nextLesson);
     updateHighlightedTraversal(currentLesson + 1, "forward");
   };
@@ -289,7 +299,7 @@ const App = () => {
   useEffect(() => {
     if (currentLesson === -1 && selectedChapterRef.current !== null) {
       selectedChapterRef.current.scrollIntoView({
-        block: "end",
+        block: "nearest",
         behavior: "smooth",
       });
     }
@@ -299,7 +309,7 @@ const App = () => {
     <div className="course-container">
       <div className="navigation-buttons">
         <button onClick={goUp} className="nav-button">
-          <UpArrow />
+          <InterChapterTopArrow />
         </button>
         <button onClick={goLeft} className="nav-button">
           <LeftArrow />
@@ -308,7 +318,7 @@ const App = () => {
           <RightArrow />
         </button>
         <button onClick={goDown} className="nav-button">
-          <DownArrow />
+          <InterChapterBottomArrow />
         </button>
       </div>
       <div className="course-content" ref={courseContentRef}>
@@ -327,28 +337,32 @@ const App = () => {
             />
 
             {chapterIndex !== chapters.length - 1 && (
-              <div style={{ display: "flex" }}>
+              <div style={{ display: "flex", height: 5, zIndex: 1 }}>
                 <div
                   style={{
                     margin: "0 10px",
-                    flexBasis: 200,
                     display: "flex",
                     justifyContent: "center",
+                    flexBasis: 200,
                   }}
                 >
-                  <div>
-                    <DownArrow
-                      isNavigating={
-                        chapterTraversalDir === "down" &&
-                        currentChapter === chapterIndex + 1
-                      }
-                    />
-
-                    <UpArrow
-                      isNavigating={
+                  <div className="inter-chapter-arrow-container">
+                    <InterChapterTopArrow
+                      classNames={`arrow-up ${
                         chapterTraversalDir === "up" &&
                         currentChapter === chapterIndex
-                      }
+                          ? "highlight-forward"
+                          : ""
+                      }`}
+                    />
+
+                    <InterChapterBottomArrow
+                      classNames={`arrow-down ${
+                        chapterTraversalDir === "down" &&
+                        currentChapter === chapterIndex + 1
+                          ? "highlight-forward"
+                          : ""
+                      }`}
                     />
                   </div>
                 </div>
@@ -379,26 +393,56 @@ function Chapter({
 
   const classSelectedName = isTheChapterSelected ? "selected" : "";
 
+  console.log({ traversalDirection });
+
   return (
     <>
       <div key={chapter.id} className={`chapter-container active`}>
-        <h4
-          className={`chapter-name ${currentChapterClassName} ${classSelectedName}`}
-          ref={isTheChapterSelected ? selectedChapterRef : null}
-        >
-          {chapter.name}
-        </h4>
-
         <div style={{ display: "flex", flexDirection: "column" }}>
-          <RightArrow
-            isNavigating={
-              currentChapter === chapterIndex && currentLesson === 0
-            }
-          />
+          <div
+            className={`previous-pointer ${currentChapterClassName} ${classSelectedName}`}
+          ></div>
 
-          <LeftArrow
-            isNavigating={isTheChapterSelected && !isComingFromChapter}
-          />
+          <div style={{ display: "flex" }}>
+            <h5
+              className={`chapter-name ${currentChapterClassName} ${classSelectedName}`}
+              ref={isTheChapterSelected ? selectedChapterRef : null}
+            >
+              {chapter.name}
+            </h5>
+
+            <div
+              className={`chapter-right-pointer ${currentChapterClassName} ${classSelectedName}`}
+            ></div>
+          </div>
+
+          <div
+            className={`next-pointer ${currentChapterClassName} ${classSelectedName}`}
+          ></div>
+        </div>
+
+        <div style={{ display: "flex", flexDirection: "column", width: 25 }}>
+          <div
+            className={`traversal-icon ${
+              isThisTheCurrentChapter && currentLesson === 0
+                ? "highlight-forward"
+                : ""
+            }`}
+            style={{ transform: "translate(-7px)" }}
+          >
+            <RightArrow />
+          </div>
+
+          <div
+            className={`traversal-icon ${
+              isTheChapterSelected && !isComingFromChapter
+                ? "highlight-backward"
+                : ""
+            }`}
+            style={{ transform: "translate(-10px)" }}
+          >
+            <LeftArrow />
+          </div>
         </div>
 
         <div className="lessons">
@@ -433,8 +477,8 @@ function RenderLesson({
 
     activeLessonEl.scrollIntoView({
       behavior: "smooth",
-      block: "end",
       inline: "nearest",
+      block: "nearest",
     });
   }, [currentLesson]);
 
@@ -450,12 +494,13 @@ function RenderLesson({
                 : ""
             }
           >
-            {lesson}
+            <h5>{lesson}</h5>
           </div>
           <div
             style={{
               display: "flex",
               flexDirection: "column",
+              width: 25,
             }}
           >
             {lessonIndex < chapter.lessons.length - 1 && (
@@ -471,66 +516,58 @@ function RenderLesson({
                   transform: "translateX(-12px)",
                 }}
               >
-                <svg
-                  width="72"
-                  height="8"
-                  viewBox="0 0 72 8"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M71.709 6.47647L64.8015 0.358824C64.6755 0.247143 64.515 0.15684 64.3319 0.0946934C64.1488 0.032547 63.9479 0.000172518 63.7443 0L61.015 0C60.7328 0 60.5769 0.226471 60.7496 0.382353L66.8274 5.76471L54.0822 5.76471L0.336953 5.76471C0.151629 5.76471 0 5.87059 0 6L0 7.76471C0 7.89412 0.151629 8 0.336953 8L70.6476 8C71.7764 8 72.404 7.09412 71.709 6.47647Z"
-                    fill="black"
-                  />
-                </svg>
+                <RightArrow />
               </div>
             )}
 
             {lessonIndex === chapter.lessons.length - 1 && (
-              <div
-                className={`traversal-icon ${
-                  highlightedTraversal === lessonIndex + 1 &&
-                  traversalDirection === "forward" &&
-                  chapterIndex === currentChapter
-                    ? "highlight-forward"
-                    : ""
-                }`}
-                style={{
-                  transform: "translateX(-12px)",
-                  display: "flex",
-                  flexDirection: "column",
-                  height: "20px",
-                }}
-              >
-                <svg
-                  width="63"
-                  height="18"
-                  viewBox="0 0 63 18"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
+              <>
+                <div
+                  className={`traversal-icon ${
+                    highlightedTraversal === lessonIndex + 1 &&
+                    traversalDirection === "forward" &&
+                    chapterIndex === currentChapter
+                      ? "highlight-forward"
+                      : ""
+                  }`}
+                  style={{
+                    transform: "translateX(-12px)",
+                    display: "flex",
+                    flexDirection: "column",
+                    height: "20px",
+                  }}
                 >
-                  <g clip-path="url(#clip0_15_4)">
-                    <path
-                      d="M47.9649 8.52632L-2.89875e-07 8.52632M47.9649 15.1579L47.9649 1.89474M52.7141 12.6711L52.7141 4.38158M57.4634 10.1842L57.4634 6.86842"
-                      stroke="black"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    />
-                  </g>
-                  <defs>
-                    <clipPath id="clip0_15_4">
-                      <rect
-                        width="18"
-                        height="63"
-                        fill="white"
-                        transform="translate(0 18) rotate(-90)"
+                  <svg
+                    width="63"
+                    height="18"
+                    viewBox="0 0 63 18"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <g clip-path="url(#clip0_15_4)">
+                      <path
+                        d="M47.9649 8.52632L-2.89875e-07 8.52632M47.9649 15.1579L47.9649 1.89474M52.7141 12.6711L52.7141 4.38158M57.4634 10.1842L57.4634 6.86842"
+                        stroke="black"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
                       />
-                    </clipPath>
-                  </defs>
-                </svg>
-              </div>
+                    </g>
+                    <defs>
+                      <clipPath id="clip0_15_4">
+                        <rect
+                          width="18"
+                          height="63"
+                          fill="white"
+                          transform="translate(0 18) rotate(-90)"
+                        />
+                      </clipPath>
+                    </defs>
+                  </svg>
+                </div>
+              </>
             )}
+
             {lessonIndex < chapter.lessons.length - 1 && lessonIndex >= 0 && (
               <div
                 className={`traversal-icon ${
@@ -542,18 +579,7 @@ function RenderLesson({
                 }`}
                 style={{ transform: "translateX(-1px)" }}
               >
-                <svg
-                  width="72"
-                  height="8"
-                  viewBox="0 0 72 8"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M0.290986 1.52352L7.19851 7.64117C7.32448 7.75285 7.48504 7.84315 7.66814 7.9053C7.85124 7.96745 8.05212 7.99982 8.2557 7.99999L10.985 7.99999C11.2672 7.99999 11.4231 7.77352 11.2504 7.61764L5.17258 2.23529L17.9178 2.23529L71.663 2.23529C71.8484 2.23529 72 2.12941 72 2L72 0.235294C72 0.105882 71.8484 -1.32558e-08 71.663 -2.94573e-08L1.35238 -6.17621e-06C0.223588 -6.27489e-06 -0.403979 0.905876 0.290986 1.52352Z"
-                    fill="black"
-                  />
-                </svg>
+                <LeftArrow />
               </div>
             )}
           </div>

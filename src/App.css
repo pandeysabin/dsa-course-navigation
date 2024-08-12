@@ -9,6 +9,10 @@
   font-family: "EuclidCircularA-Medium";
 }
 
+h5 {
+  margin: 0;
+}
+
 :root {
   --primary-color: #0556f3;
   --programiz-brand-divider: #d3dce6;
@@ -16,7 +20,7 @@
   --programiz-brand-asset-background: #f8faff;
 
   --programiz-brand-artwork-background: #ffe8d6;
-  --programiz-brand-asset-primary: ;
+  --programiz-brand-secondary: #6501e5;
 }
 
 /* Container for the whole course layout */
@@ -65,7 +69,6 @@
   height: calc(100vh - 60px); /* Adjust height considering button area */
   overflow-y: auto; /* Enable vertical scrolling */
   overflow-x: hidden; /* Prevent horizontal scrolling */
-  gap: 16px;
 }
 
 /* Container for each chapter */
@@ -73,31 +76,117 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 10px;
   position: relative;
 }
 
 /* Styling for chapter name */
 .chapter-name {
   font-weight: bold;
-  background-color: #ffe2fe;
+  background-color: var(--programiz-brand-artwork-background);
   padding: 6px;
-  border-radius: 4px;
-  min-width: 200px;
-  margin: 0 10px;
+  min-width: 225px;
+  margin: 0 0;
   padding: 10px 20px;
   box-sizing: border-box;
+  position: relative;
+  text-align: center;
+  color: var(--programiz-text-primary);
+  border: 2px solid var(--programiz-brand-divider);
 }
 
+.previous-pointer {
+  border: 2px solid var(--programiz-brand-divider);
+  background-color: white;
+  border-radius: 0;
+  border-top-right-radius: 4px;
+  border-top-left-radius: 4px;
+  height: 4px;
+  border-bottom: 0px;
+}
+
+.previous-pointer.active {
+  border-color: var(--primary-color);
+}
+
+.previous-pointer.active.selected {
+  background-color: var(--programiz-brand-artwork-background);
+}
+
+.next-pointer.active {
+  border-color: var(--primary-color);
+}
+
+.next-pointer.active.selected {
+  background-color: var(--programiz-brand-artwork-background);
+}
+
+.next-pointer {
+  border: 2px solid var(--programiz-brand-divider);
+  border-bottom-right-radius: 4px;
+  border-bottom-left-radius: 4px;
+  height: 4px;
+  border-top: none;
+}
+
+.chapter-right-pointer {
+  width: 20px;
+  border: 2px solid var(--programiz-brand-divider);
+  border-left: none;
+}
+
+.chapter-right-pointer.active {
+  border: 2px solid var(--primary-color);
+  border-left: none;
+}
+
+.chapter-right-pointer.active.selected {
+  background-color: var(--programiz-brand-artwork-background);
+}
+
+/* .chapter-name::after {
+  content: "";
+  position: absolute;
+  width: 30px;
+  height: 100%;
+  border: 2px solid var(--programiz-brand-divider);
+  top: 0;
+  right: 0;
+  background-color: white;
+  border-radius: 0;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+} */
+
+/* .chapter-name::before {
+  content: "";
+  position: absolute;
+  width: 30px;
+  height: 100%;
+  top: 0;
+  left: 0;
+  border: 2px solid var(--programiz-brand-divider);
+  background-color: white;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+} */
+
 .chapter-name.active {
-  background-color: #3172b4;
-  color: #ffffff;
+  background-color: var(--programiz-brand-artwork-background);
+  border: 2px solid var(--primary-color);
+}
+
+.chapter-name.active::after {
+  border: none;
+  border: 2px solid var(--primary-color);
+}
+
+.chapter-name.active::before {
+  border: 2px solid var(--primary-color);
+  border-bottom: none;
 }
 
 .chapter-name.active.selected {
-  border: 1px solid #115fb3;
-  background-color: #ffffff;
-  color: #115fb3;
+  border: 2px solid var(--primary-color);
 }
 
 .chapter-container.active .lessons {
@@ -116,13 +205,14 @@
   justify-content: flex-start;
   flex-grow: 0;
   flex-shrink: 0;
+  marginleft: -13px;
 }
 
 /* Styling for individual lessons */
 .lesson {
   padding: 10px 30px;
   margin: 0px;
-  border: 1px solid var(--programiz-brand-divider);
+  border: 2px solid var(--programiz-brand-divider);
   border-radius: 4px;
   background-color: var(--programiz-brand-asset-background);
   transition: background-color 0.3s, transform 0.3s;
@@ -141,6 +231,7 @@
   top: 0;
   left: 0;
   border-right: 1px solid var(--programiz-brand-divider);
+  background-color: white;
 }
 
 .lesson::after {
@@ -151,11 +242,21 @@
   border-left: 1px solid var(--programiz-brand-divider);
   top: 0;
   right: 0;
+  background-color: white;
 }
 
 .lesson#active {
   background-color: var(--programiz-brand-artwork-background);
   color: var(--programiz-text-primary);
+  border: 2px solid var(--primary-color);
+}
+
+.lesson#active::after {
+  border-left: 2px solid var(--primary-color);
+}
+
+.lesson#active::before {
+  border-right: 2px solid var(--primary-color);
 }
 
 .lesson#active::before {
@@ -169,22 +270,23 @@
 /* Styling for traversal icons */
 .traversal-icon {
   transition: transform 0.3s, opacity 0.3s;
-  display: inline-block;
+  display: flex;
+  align-items: center;
   opacity: 0.1; /* Slightly faded by default */
   height: 12px;
-  width: 60px;
+  margin-top: 2px;
+  min-width: 45px;
 }
 
 /* Forward traversal icon animation */
 .highlight-forward {
   animation: grow-shrink-forward 0.5s forwards;
-  opacity: 1; /* Fully visible when highlighted */
 }
 
 /* Backward traversal icon animation */
 .highlight-backward {
   animation: grow-shrink-backward 0.5s forwards;
-  opacity: 1; /* Fully visible when highlighted */
+  opacity: 1;
 }
 
 /* Keyframes for forward traversal animation */
@@ -193,10 +295,11 @@
     transform: scale(1);
   }
   50% {
+    opacity: 1;
     transform: scale(1.2);
   }
   100% {
-    transform: scale(1);
+    /* transform: scale(1); */
   }
 }
 
@@ -206,9 +309,11 @@
     transform: scale(1);
   }
   50% {
+    opacity: 1;
     transform: scale(1.2);
   }
   100% {
+    opacity: 0.2;
     transform: scale(1);
   }
 }
@@ -227,4 +332,12 @@
 
     transform: translateX(0px);
   }
+}
+
+.inter-chapter-arrow-container {
+  opacity: 0.2;
+  display: flex;
+  gap: 2px;
+  width: "100%";
+  justify-content: "center";
 }
