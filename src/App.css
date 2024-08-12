@@ -101,9 +101,9 @@
 .lesson {
   padding: 10px 30px;
   margin: 0px;
-  border: 1px solid #ccc;
+  border: 1px solid #0556f3;
   border-radius: 4px;
-  background-color: #f5f5f5;
+  background-color: #ffffff;
   transition: background-color 0.3s, transform 0.3s;
   white-space: nowrap;
   position: relative;
@@ -116,9 +116,9 @@
   position: absolute;
   width: 20px;
   height: 100%;
-  background-color: grey;
   top: 0;
   left: 0;
+  border-right: 1px solid #0556f3;
 }
 
 .lesson::after {
@@ -126,7 +126,7 @@
   position: absolute;
   width: 20px;
   height: 100%;
-  background-color: grey;
+  border-left: 1px solid #0556f3;
   top: 0;
   right: 0;
 }
@@ -134,6 +134,14 @@
 .lesson#active {
   background-color: #007bff;
   color: white;
+}
+
+.lesson#active::before {
+  background-color: #ffffff;
+}
+
+.lesson#active::after {
+  background-color: #ffffff;
 }
 
 /* Styling for traversal icons */
