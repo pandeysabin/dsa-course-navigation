@@ -11,6 +11,12 @@
 
 :root {
   --primary-color: #0556f3;
+  --programiz-brand-divider: #d3dce6;
+  --programiz-text-primary: #25265e;
+  --programiz-brand-asset-background: #f8faff;
+
+  --programiz-brand-artwork-background: #ffe8d6;
+  --programiz-brand-asset-primary: ;
 }
 
 /* Container for the whole course layout */
@@ -116,14 +122,15 @@
 .lesson {
   padding: 10px 30px;
   margin: 0px;
-  border: 1px solid var(--primary-color);
+  border: 1px solid var(--programiz-brand-divider);
   border-radius: 4px;
-  background-color: #ffffff;
+  background-color: var(--programiz-brand-asset-background);
   transition: background-color 0.3s, transform 0.3s;
   white-space: nowrap;
   position: relative;
   z-index: -1;
   overflow: hidden;
+  color: var(--programiz-text-primary);
 }
 
 .lesson::before {
@@ -133,7 +140,7 @@
   height: 100%;
   top: 0;
   left: 0;
-  border-right: 1px solid var(--primary-color);
+  border-right: 1px solid var(--programiz-brand-divider);
 }
 
 .lesson::after {
@@ -141,14 +148,14 @@
   position: absolute;
   width: 20px;
   height: 100%;
-  border-left: 1px solid var(--primary-color);
+  border-left: 1px solid var(--programiz-brand-divider);
   top: 0;
   right: 0;
 }
 
 .lesson#active {
-  background-color: var(--primary-color);
-  color: white;
+  background-color: var(--programiz-brand-artwork-background);
+  color: var(--programiz-text-primary);
 }
 
 .lesson#active::before {
@@ -163,7 +170,7 @@
 .traversal-icon {
   transition: transform 0.3s, opacity 0.3s;
   display: inline-block;
-  opacity: 0.6; /* Slightly faded by default */
+  opacity: 0.1; /* Slightly faded by default */
   height: 12px;
   width: 60px;
 }
