@@ -56,34 +56,6 @@ export function InterChapterBottomArrow({ classNames }) {
   );
 }
 
-export function UpArrow({ isNavigating }) {
-  return (
-    <svg
-      className={`arrow-up ${isNavigating ? "highlight-forward" : ""}`}
-      width="26"
-      height="26"
-      viewBox="0 0 26 26"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path
-        d="M13.2252 20.1055L12.9878 6.10751"
-        stroke="#0556f3"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-      />
-      <path
-        d="M6.10752 13.2252L12.9878 6.10751L20.1055 12.9878"
-        stroke="#0556f3"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-      />
-    </svg>
-  );
-}
-
 export function LeftArrow({ isNavigating }) {
   return (
     <svg
@@ -140,10 +112,9 @@ export function RightArrow({ isNavigating }) {
   );
 }
 
-export function DownArrow({ isNavigating }) {
+export function ProgramizUpArrow() {
   return (
     <svg
-      className={`arrow-down ${isNavigating ? "highlight-forward" : ""}`}
       width="26"
       height="26"
       viewBox="0 0 26 26"
@@ -151,15 +122,96 @@ export function DownArrow({ isNavigating }) {
       xmlns="http://www.w3.org/2000/svg"
     >
       <path
-        d="M13.1896 6.107L13.0234 20.106"
-        stroke="#0556f3"
+        d="M13.1265 19.9989L12.8736 6.00114"
+        stroke="#0556F3"
         stroke-width="2"
         stroke-linecap="round"
         stroke-linejoin="round"
       />
       <path
-        d="M20.106 13.1896L13.0234 20.106L6.107 13.0234"
-        stroke="#0556f3"
+        d="M6.00116 13.1264L12.8736 6.00114L19.9989 12.8736"
+        stroke="#0556F3"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
+  );
+}
+
+export function ProgramizDownArrow() {
+  return (
+    <svg
+      width="26"
+      height="26"
+      viewBox="0 0 26 26"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M13.0104 6.00001L12.9896 20"
+        stroke="#0556F3"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M20 13.0104L12.9896 20L6.00002 12.9896"
+        stroke="#0556F3"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
+  );
+}
+
+export function ProgramizLeftArrow() {
+  return (
+    <svg
+      width="26"
+      height="26"
+      viewBox="0 0 26 26"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M20.0176 12.967L6.01801 13.0686"
+        stroke="#0556F3"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M13.0686 20.0176L6.01801 13.0686L12.967 6.018"
+        stroke="#0556F3"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
+  );
+}
+
+export function ProgramizRightArrow() {
+  return (
+    <svg
+      width="26"
+      height="26"
+      viewBox="0 0 26 26"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M6.08728 13.1687L20.0863 13.0049"
+        stroke="#0556F3"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M13.0049 6.08727L20.0863 13.0049L13.1687 20.0863"
+        stroke="#0556F3"
         stroke-width="2"
         stroke-linecap="round"
         stroke-linejoin="round"

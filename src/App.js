@@ -4,6 +4,10 @@ import {
   InterChapterBottomArrow,
   InterChapterTopArrow,
   LeftArrow,
+  ProgramizDownArrow,
+  ProgramizLeftArrow,
+  ProgramizRightArrow,
+  ProgramizUpArrow,
   RightArrow,
 } from "./Arrows";
 
@@ -313,16 +317,16 @@ const App = () => {
     <div className="course-container">
       <div className="navigation-buttons">
         <button onClick={goUp} className="nav-button">
-          <InterChapterTopArrow />
+          <ProgramizUpArrow />
         </button>
         <button onClick={goLeft} className="nav-button">
-          <LeftArrow />
+          <ProgramizLeftArrow />
         </button>
         <button onClick={goRight} className="nav-button">
-          <RightArrow />
+          <ProgramizRightArrow />
         </button>
         <button onClick={goDown} className="nav-button">
-          <InterChapterBottomArrow />
+          <ProgramizDownArrow />
         </button>
       </div>
       <div className="course-content" ref={courseContentRef}>
