@@ -537,7 +537,6 @@ function RenderLesson({
                       : ""
                   }`}
                   style={{
-                    transform: "translateX(-12px)",
                     display: "flex",
                     flexDirection: "column",
                     height: "20px",
