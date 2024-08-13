@@ -1,12 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./App.css"; // Ensure this file is updated
 import {
-  DownArrow,
   InterChapterBottomArrow,
   InterChapterTopArrow,
   LeftArrow,
   RightArrow,
-  UpArrow,
 } from "./Arrows";
 
 const App = () => {
@@ -207,6 +205,9 @@ const App = () => {
 
   const [chapterTraversalDir, setChapterTraversalDir] = useState(null);
 
+  const [isComingFromChapterToLesson, setIsComingFromChapterToLesson] =
+    useState(false);
+
   const updateHighlightedTraversal = (targetLessonIndex, direction) => {
     setHighlightedTraversal(targetLessonIndex);
     setTraversalDirection(direction);
@@ -220,7 +221,8 @@ const App = () => {
     const lessons = chapters[currentChapter].lessons;
     const nextLesson = Math.min(currentLesson + 1, lessons.length - 1);
 
-    if (nextLesson === 0) {
+    if (currentLesson === -1 && nextLesson === 0) {
+      setIsComingFromChapterToLesson(true);
     }
 
     setCurrentLesson(nextLesson);
@@ -232,6 +234,8 @@ const App = () => {
 
     if (previousLesson === -1) {
       setChapterTraversalDir(null);
+    } else if (previousLesson === 0) {
+      setIsComingFromChapterToLesson(false);
     }
 
     updateHighlightedTraversal(previousLesson, "backward");
@@ -334,10 +338,11 @@ const App = () => {
               selectedChapterRef={selectedChapterRef}
               key={chapter.id}
               isComingFromChapter={chapterTraversalDir}
+              isComingFromChapterToLesson={isComingFromChapterToLesson}
             />
 
             {chapterIndex !== chapters.length - 1 && (
-              <div style={{ display: "flex", height: 5, zIndex: 1 }}>
+              <div style={{ display: "flex", height: 14, zIndex: 1 }}>
                 <div
                   style={{
                     margin: "0 10px",
@@ -384,6 +389,7 @@ function Chapter({
   traversalDirection,
   selectedChapterRef,
   isComingFromChapter,
+  isComingFromChapterToLesson,
 }) {
   const isThisTheCurrentChapter = chapterIndex === currentChapter;
 
@@ -393,15 +399,13 @@ function Chapter({
 
   const classSelectedName = isTheChapterSelected ? "selected" : "";
 
-  console.log({ traversalDirection });
-
   return (
     <>
       <div key={chapter.id} className={`chapter-container active`}>
         <div style={{ display: "flex", flexDirection: "column" }}>
-          <div
+          {/* <div
             className={`previous-pointer ${currentChapterClassName} ${classSelectedName}`}
-          ></div>
+          ></div> */}
 
           <div style={{ display: "flex" }}>
             <h5
@@ -416,15 +420,17 @@ function Chapter({
             ></div>
           </div>
 
-          <div
+          {/* <div
             className={`next-pointer ${currentChapterClassName} ${classSelectedName}`}
-          ></div>
+          ></div> */}
         </div>
 
         <div style={{ display: "flex", flexDirection: "column", width: 25 }}>
           <div
             className={`traversal-icon ${
-              isThisTheCurrentChapter && currentLesson === 0
+              isThisTheCurrentChapter &&
+              currentLesson === 0 &&
+              isComingFromChapterToLesson
                 ? "highlight-forward"
                 : ""
             }`}
@@ -513,7 +519,7 @@ function RenderLesson({
                     : ""
                 }`}
                 style={{
-                  transform: "translateX(-12px)",
+                  transform: "translateX(-16px)",
                 }}
               >
                 <RightArrow />
